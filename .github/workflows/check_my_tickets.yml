@@ -3,7 +3,7 @@ name: Monitor My Melon Tickets
 on:
   schedule:
     # 每30分钟检查一次，你可以根据需要修改这个频率
-    - cron: '*/1* * * *'
+    - cron: '*/1 * * * *'
   workflow_dispatch: {} # 允许你在 GitHub 网站上手动触发来测试
 
 jobs:
