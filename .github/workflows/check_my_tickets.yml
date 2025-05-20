@@ -1,0 +1,47 @@
+name: Monitor My Melon Tickets
+
+on:
+  schedule:
+    # 每30分钟检查一次，你可以根据需要修改这个频率
+    - cron: '*/1* * * *'
+  workflow_dispatch: {} # 允许你在 GitHub 网站上手动触发来测试
+
+jobs:
+  check_melon_availability:
+    runs-on: ubuntu-latest
+    steps:
+      # 步骤1: 从你的仓库下载代码 (主要是为了让 uses: ./ 能找到 action.yml)
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 步骤2: 运行 melon-ticket-actions 插件
+      - name: Run Melon Ticket Action
+        uses: ./ # 使用你当前仓库根目录下的 action.yml 来运行这个插件
+        with:
+          # 【【【 根据你提供的 action.yml inputs 精确填写 】】】
+
+          # 必需参数1：产品ID
+          product-id: '211358'  # 【请修改为你实际想监控的 Melon 产品ID】
+
+          # 必需参数2：日程ID
+          # 【重要】这个 schedule-id 你需要从 Melon 网站上找到对应你想监控的场次
+          # 它通常是一个数字或特定的字符串。你可能需要通过浏览器开发者工具查看网络请求，
+          # 或者查看演出详情页的URL来找到它。
+          # 如果不确定，可以先随便填一个占位符，比如 'YOUR_SCHEDULE_ID_HERE'，
+          # 但 Action 运行时可能会报错，直到你填入正确的值。
+          schedule-id: '20250710' # 【请修改为实际的日程ID】
+
+          # 必需参数3：座位ID
+          # 【重要】这个 seat-id 也需要你从 Melon 网站找到。
+          # 这表明这个 Action 可能设计为监控特定座位。如果只想看是否有任意票，
+          # 你需要确认这个 Action 是否支持不指定 seat-id，或者是否有通配符。
+          # 如果必须指定，你可能需要找到一个你想监控的座位区域的代表性 ID。
+          # 如果不确定，可以先随便填一个占位符，比如 'YOUR_SEAT_ID_HERE'。
+          seat-id: '1_0' # 【请修改为实际的座位ID】
+
+          # 必需参数4：Slack Webhook URL
+          # 你已经设置了名为 MY_SLACK_WEBHOOK_URL 的 Secret，所以这里可以直接用
+          slack-incoming-webhook-url: ${{ secrets.MY_SLACK_WEBHOOK_URL }}
+
+          # 可选参数：自定义消息 (如果想用默认的韩文消息，可以不写这一行)
+          # message: '【Melon票务提醒】您关注的演出可能有票了！' # 你可以自定义中文消息
