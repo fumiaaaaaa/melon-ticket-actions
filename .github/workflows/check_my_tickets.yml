@@ -37,7 +37,7 @@ jobs:
           # 你需要确认这个 Action 是否支持不指定 seat-id，或者是否有通配符。
           # 如果必须指定，你可能需要找到一个你想监控的座位区域的代表性 ID。
           # 如果不确定，可以先随便填一个占位符，比如 'YOUR_SEAT_ID_HERE'。
-          seat-id: '1_0' # 【请修改为实际的座位ID】
+          seat-id: '581_163' # 【请修改为实际的座位ID】
 
           # 必需参数4：Slack Webhook URL
           # 你已经设置了名为 MY_SLACK_WEBHOOK_URL 的 Secret，所以这里可以直接用
