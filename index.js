@@ -27,6 +27,12 @@ const qs = require("querystring");
         params: {
             v: "1",
         },
+         headers: { // <--- 添加这一段
+            'Accept': 'application/json, text/javascript, */*; q=0.01', // 尝试一个更像浏览器发送的 Accept 头
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36', // 模拟一个常见的浏览器 User-Agent
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', // 明确指定请求体格式，axios 通常会自动处理，但明确指定无害
+            'X-Requested-With': 'XMLHttpRequest' // 很多网站的 AJAX 请求会带这个头
+        },
         data: qs.stringify({
             prodId: productId,
             scheduleNo: scheduleId,
